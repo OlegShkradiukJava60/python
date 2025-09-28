@@ -1,28 +1,35 @@
+from typing import List
 
-def bSearchSortedList(lst: list[int], num: int) -> int:
+def isSumTwo(numbers: List[int], target: int) -> bool:
+    seen: set[int] = set()
+    result: bool = False
 
-    left: int = 0
-    right: int = len(lst) - 1
-    defp: int = len(lst)
+    for num in numbers:
+        other: int = target - num
+        if other in seen:
+            result = True
+            break
+        seen.add(num)
 
-    while left <= right:
-        middle: int = (left + right) // 2
-        if num <= lst[middle]:
-            defp = middle
-            right = middle - 1
-        else:
-            left = middle + 1
-    if defp < len(lst) and lst[defp] == num:
-        return defp
-    else:
-        return -(defp) - 1
+    return result
 
 
-numbers1: list[int] = [1, 5, 20, 20, 20, 20, 20, 30, 100]
-print(bSearchSortedList(numbers1, 4))  # -2
+def maxNegativeRepr(numbers: List[int]) -> int:
+    numbers_set: set[int] = set(numbers)
+    max_value: int = -1
 
-numbers2: list[int] = [20, 20, 20, 20, 20, 20]
-print(bSearchSortedList(numbers2, 20))  # 0
+    for num in numbers:
+        if num > 0 and -num in numbers_set:
+            if num > max_value:
+                max_value = num
 
-numbers3: list[int] = [20, 30, 40, 50, 60]
-print(bSearchSortedList(numbers3, 45))  # -4
+    return max_value
+
+
+if __name__ == "__main__":
+    print(isSumTwo([1, 2, 3, 4], 4))   # True
+    print(isSumTwo([1, 2, 3, 4], 2))   # False
+
+    print(maxNegativeRepr([100, 4, 1, -1, -4, -100]))      # 100
+    print(maxNegativeRepr([100, 4, 1, 1, 4, 100, -1]))     # 1
+    print(maxNegativeRepr([100, 4, 1, 1, 4, 100, 1, -2]))  # -1
