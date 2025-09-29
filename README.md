@@ -1,30 +1,17 @@
-# HW 22 Tasks for figuring out O[N] solutions
+# HW 23
 
-## Function isSumTwo
+## Update class Club from CW#23
 
-- Takes two parameters: list of integer numbers (numbers) and one integer number (sum)<br>
-- Returns True (T should be capital) if the given list (numbers) contains two items, sum of which equals the given number (sum), otherwise returns False
+### Write method getPersonsByAge(minAge:int, maxAge:int) returning list of all persons with minAge<=age<=maxAge
 
-### Examples
+- Note: there is some nuance, try to figure out a solution
 
-- isSumTwo([1, 2, 3, 4], 4) -> True <br>
-- isSumTwo([1, 2, 3, 4], 2) -> False
+### Write unit tests for all methods of the class Club
 
-### Unit tests
+## Write class Dictionary with following methods (use only containers that we learned in the previous sessions)
 
-Unit tests in a separate file (module)
+### Method addWord(word:str) adds word, duplications based on case insensitive comparing are disallowed
 
-## Function maxNegativeRepr
+### Method getWordsByPrefix(prefix: str) returning list of all words starting with the given prefix, comparing based on case insensitive manner but words should keep their case
 
-- Takes one parameter: list of integer numbers (numbers)<br>
-- Returns either maximal positive number from the given list having its negative representation or -1 if no any <br>
-
-### Examples
-
-- maxNegativeRepr(100, 4, 1, -1, -4, -100) -> 100 <br>
-- maxNegativeRepr(100, 4, 1, 1, 4, 100, -1) -> 1 <br>
-- maxNegativeRepr(100, 4, 1, 1, 4, 100, 1, -2) -> -1
-
-### Unit tests
-
-Unit tests in a separate file (module)
+### Write unit tests for all methods of the class Dictionary
