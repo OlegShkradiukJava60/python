@@ -1,17 +1,6 @@
-# HW 23
-
-## Update class Club from CW#23
-
-### Write method getPersonsByAge(minAge:int, maxAge:int) returning list of all persons with minAge<=age<=maxAge
-
-- Note: there is some nuance, try to figure out a solution
-
-### Write unit tests for all methods of the class Club
-
-## Write class Dictionary with following methods (use only containers that we learned in the previous sessions)
-
-### Method addWord(word:str) adds word, duplications based on case insensitive comparing are disallowed
-
-### Method getWordsByPrefix(prefix: str) returning list of all words starting with the given prefix, comparing based on case insensitive manner but words should keep their case
-
-### Write unit tests for all methods of the class Dictionary
+# HW 24
+## Complete class MyDict according to the TODO comments (see module main.py)
+### Write tests for class MyDict in separate test file
+## Write implementation of the specified methods of the class MySortedDict according to the TODO comments inside the methods
+### Write tests for class MySortedDict in separate test file
+## Override methods of the standard class OrderedDict as specified in the class DictCache extending OrderedDict. See TODO comments. All the specified methods should have implementation making sure that the tests from the file test_dict_cache.py passed
