@@ -1,23 +1,48 @@
 
-class MyStackInt:
+
+from typing import Callable, Iterator
+
+
+class NumberBox:
     def __init__(self):
-        self.__stack: list[int] = []
-        self.__max_stack: list[int] = []
+        self.__data: list[int] = []
 
-    def push(self, num: int) -> None:
-        self.__stack.append(num)
-        if not self.__max_stack or num >= self.__max_stack[-1]:
-            self.__max_stack.append(num)
-        else:
-            self.__max_stack.append(self.__max_stack[-1])
+    def addNumber(self, num: int) -> None:
+        self.__data.append(num)
 
-    def pop(self) -> int:
-        if not self.__stack:
-            raise IndexError("pop from empty stack")
-        self.__max_stack.pop()
-        return self.__stack.pop()
+    def removeNumber(self, num: int) -> int:
+        for i, v in enumerate(self.__data):
+            if v == num:
+                self.__data.pop(i)
+                return num
+        return None  # type: ignore
 
-    def max(self) -> int:
-        if not self.__stack:
-            raise IndexError("max from empty stack")
-        return self.__max_stack[-1]
+    def removeNumbersPredicate(self, pred: Callable[[int], bool]) -> int:
+        new_data: list[int] = []
+        removed = 0
+        for x in self.__data:
+            if pred(x):
+                removed += 1
+            else:
+                new_data.append(x)
+        self.__data = new_data
+        return removed
+
+    def removeNumbersRange(self, min: int, max: int) -> int:
+        return self.removeNumbersPredicate(lambda x: min <= x <= max)
+
+    def __iter__(self) -> Iterator[int]:
+        return iter(self.__data)
+
+    def distinct(self) -> int:
+        seen: set[int] = set()
+        new_data: list[int] = []
+        removed = 0
+        for x in self.__data:
+            if x in seen:
+                removed += 1
+            else:
+                seen.add(x)
+                new_data.append(x)
+        self.__data = new_data
+        return removed
