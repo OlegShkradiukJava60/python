@@ -1,42 +1,29 @@
-from array import array
+
+from typing import Generic, TypeVar
+
+T = TypeVar("T")
 
 
-class MyStackInt:
-    def __init__(self):
-        self._data = array('i')
-        self._max_idx = array('i')
+class MyArray(Generic[T]):
+    def __init__(self, length: int) -> None:
+        if length < 1:
+            raise ValueError("amount of items cannot be less than 1")
+        self.length: int = length
+        self.allValue: T | None = None
+        self.indexValue: dict[int, T] = {}
 
-    def __len__(self) -> int:
-        return len(self._data)
+    def __checkIndex(self, index: int) -> None:
+        if index < 0 or index >= self.length:
+            raise IndexError(index)
 
-    def _index_of_max(self):
-        if not self._max_idx:
-            raise IndexError("max from empty stack")
-        return self._max_idx[-1]
+    def setAll(self, value: T) -> None:
+        self.allValue = value
+        self.indexValue = {}  # O(1)
 
-    def push(self, val: int):
-        self._data.append(val)
-        i = len(self._data) - 1
-        if not self._max_idx:
-            self._max_idx.append(i)
-            return
-        current_max_index = self._max_idx[-1]
-        if val >= self._data[current_max_index]:
-            self._max_idx.append(i)
+    def set(self, value: T, index: int) -> None:
+        self.__checkIndex(index)
+        self.indexValue[index] = value  # O(1)
 
-    def pop(self):
-        if not self._data:
-            raise IndexError("pop from empty stack")
-        i = len(self._data) - 1
-        result = self._data.pop()
-        if self._max_idx and self._max_idx[-1] == i:
-            self._max_idx.pop()
-        return result
-
-    def max(self):
-        return self._data[self._index_of_max()]
-
-    def peek(self):
-        if not self._data:
-            raise IndexError("peek from empty stack")
-        return self._data[-1]
+    def get(self, index: int) -> T | None:
+        self.__checkIndex(index)
+        return self.indexValue.get(index, self.allValue)  # O(1)
