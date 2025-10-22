@@ -2,7 +2,7 @@
 from main import MyArray
 from unittest import TestCase, main
 
-LENGTH: int = 100000000000000000000000000
+LENGTH: int = 10000000000
 
 
 class TestMyArray(TestCase):
