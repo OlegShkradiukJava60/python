@@ -1,6 +1,12 @@
-# HW 24
-## Complete class MyDict according to the TODO comments (see module main.py)
-### Write tests for class MyDict in separate test file
-## Write implementation of the specified methods of the class MySortedDict according to the TODO comments inside the methods
-### Write tests for class MySortedDict in separate test file
-## Override methods of the standard class OrderedDict as specified in the class DictCache extending OrderedDict. See TODO comments. All the specified methods should have implementation making sure that the tests from the file test_dict_cache.py passed
+# HW #26 Definition
+
+## Write generic class MyArray[T] with the following methods
+
+- constructor taking amount of items (It may be very huge for example 1000000000)
+- setAll - sets in all items the same given value
+- set - sets a given value at a given index (index may be ether 0 or any positive number less than amount of items), raises IndexError exception if the index greater or equal the amount or less than 0
+- get - returns the value at a given index (index may be ether 0 or any positive number less than amount of items), raises IndexError exception if the index greater or equal the amount or less than 0
+
+## Note all the above mathods should have complexity O[1]
+
+## Write tests for class MyArray[int]
