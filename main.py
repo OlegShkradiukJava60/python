@@ -5,25 +5,25 @@ T = TypeVar("T")
 
 
 class MyArray(Generic[T]):
-    def __init__(self, length: int) -> None:
+    def __init__(self, length: int):
         if length < 1:
             raise ValueError("amount of items cannot be less than 1")
         self.length: int = length
         self.allValue: T | None = None
         self.indexValue: dict[int, T] = {}
 
-    def __checkIndex(self, index: int) -> None:
+    def __checkIndex(self, index: int):
         if index < 0 or index >= self.length:
             raise IndexError(index)
 
-    def setAll(self, value: T) -> None:
+    def setAll(self, value: T):
         self.allValue = value
-        self.indexValue = {}  # O(1)
+        self.indexValue = {}
 
-    def set(self, value: T, index: int) -> None:
+    def set(self, value: T, index: int):
         self.__checkIndex(index)
-        self.indexValue[index] = value  # O(1)
+        self.indexValue[index] = value
 
-    def get(self, index: int) -> T | None:
+    def get(self, index: int) -> T:
         self.__checkIndex(index)
-        return self.indexValue.get(index, self.allValue)  # O(1)
+        return self.indexValue.get(index, self.allValue)
