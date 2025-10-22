@@ -1,44 +1,27 @@
-
-def isSumTwo(numbers: list[int], sum: int):
-    helper: set[int] = set()
-    indx: int = 0
-    res: bool = False
-    length: int = len(numbers)
-    while indx < length and not res:
-        if sum - numbers[indx] in helper:
-            res = True
-        else:
-            helper.add(numbers[indx])
-            indx += 1
-    return res
+from typing import Generic, TypeVar
+T = TypeVar("T")
 
 
-def maxNegativeRepr(numbers: list[int]):
-    res: int = 0
-    helper: set[int] = set()
-    for num in numbers:
-        if abs(num) > res and -num in helper:
-            res = abs(num)
-        else:
-            helper.add(num)
-    return res if res else -1
+class MyArray(Generic[T]):
+    def __init__(self, length: int):
+        if length < 1:
+            raise ValueError("amount of items cannot be less than 1")
+        self.allValue: T = None
+        self.indexValue: dict[int, T] = {}
+        self.length: int = length
 
-#  N ^ 2 implementation
+    def __checkIndex(self, index: int):
+        if (index < 0 or index >= self.length):
+            raise IndexError(index)
 
+    def setAll(self, value: T):
+        self.allValue = value
+        self.indexValue = {}
 
-def find_sums(arr, target):
-    result = False
-    if not arr or len(arr) < 2:
-        return False
-    for i, num in enumerate(arr):
-        complement = target - num
-        # Проверяем что complement есть в оставшейся части массива
-        if complement in arr[i+1:]:
-            result = True
-            break
+    def set(self, value: T, index: int):
+        self.__checkIndex(index)
+        self.indexValue[index] = value
 
-    return result
-
-
-
-
+    def get(self, index: int):
+        self.__checkIndex(index)
+        return self.indexValue.get(index, self.allValue)
