@@ -1,6 +1,14 @@
 from unittest import TestCase, main
 import regular_expressions as regex 
 import re
+import operator as op
+ops: dict = {
+    "+": op.add,
+    "-": op.sub,
+    "*": op.mul,
+    "/": op.itruediv,
+    "**": op.pow
+}
 class TestRegEx(TestCase):
     def test_pythonic_name_true(self):
         self.assertTrue(re.fullmatch(regex.pythonicNameRe(),"__"))
@@ -49,5 +57,40 @@ class TestRegEx(TestCase):
         self.assertFalse(re.fullmatch(regex.mobileIsraelNumberRe(), "+972-54123456"))
         self.assertFalse(re.fullmatch(regex.mobileIsraelNumberRe(), "059123-45-677")) 
         self.assertFalse(re.fullmatch(regex.mobileIsraelNumberRe(), "054-1-2-3-45-67"))
-        self.assertFalse(re.fullmatch(regex.mobileIsraelNumberRe(), "0571-23-45-6-7"))     
+        self.assertFalse(re.fullmatch(regex.mobileIsraelNumberRe(), "0571-23-45-6-7")) 
+    def test_arithmetic_operand(self):
+        self.assertTrue(re.fullmatch(regex.arithmeticOperandRe(), "42") ) 
+        self.assertTrue(re.fullmatch(regex.arithmeticOperandRe(), " 42 ") ) 
+        self.assertTrue(re.fullmatch(regex.arithmeticOperandRe(), "(42)") )
+        self.assertTrue(re.fullmatch(regex.arithmeticOperandRe(), " ( 42 )") ) 
+        self.assertTrue(re.fullmatch(regex.arithmeticOperandRe(), "42.5") ) 
+        self.assertTrue(re.fullmatch(regex.arithmeticOperandRe(), "42.555e+20") )
+        self.assertFalse(re.fullmatch(regex.arithmeticOperandRe(), "42 5") ) 
+        self.assertFalse(re.fullmatch(regex.arithmeticOperandRe(), "") ) 
+        self.assertFalse(re.fullmatch(regex.arithmeticOperandRe(), "()") )
+        self.assertFalse(re.fullmatch(regex.arithmeticOperandRe(), ")42.5") ) 
+        self.assertFalse(re.fullmatch(regex.arithmeticOperandRe(), "42&5") ) 
+        self.assertFalse(re.fullmatch(regex.arithmeticOperandRe(), "42.555(") )
+    def test_arithmetic_operator(self):
+        operatorRe = regex.arithmeticOperatorRe(ops)
+        self.assertTrue(re.fullmatch(operatorRe, "**"))
+        self.assertTrue(re.fullmatch(operatorRe, "+"))
+        self.assertTrue(re.fullmatch(operatorRe, "*"))
+        self.assertTrue(re.fullmatch(operatorRe, "-"))
+        self.assertTrue(re.fullmatch(operatorRe, "/")) 
+        
+        self.assertFalse(re.fullmatch(operatorRe, "++"))
+        self.assertFalse(re.fullmatch(operatorRe, "//"))  
+    def test_arithmetic_expression(self):
+        arithmeticExpr = regex.arithmeticExpression(ops)
+        self.assertTrue(re.fullmatch(arithmeticExpr, "3+4-7")) 
+        self.assertTrue(re.fullmatch(arithmeticExpr, "3 + 4 - 7.5")) 
+        self.assertTrue(re.fullmatch(arithmeticExpr, "10"))
+        self.assertTrue(re.fullmatch(arithmeticExpr, "3+(4-7)"))
+        self.assertTrue(re.fullmatch(arithmeticExpr,"(3 + (2 * 10 / (40 - 20))+(3 * 4)) * 10" ))
+        self.assertTrue(re.fullmatch(arithmeticExpr,"(3 ** (2.3 * 10.8 / (40 - 20))+(3 * 4)) * (10/3)" )) 
+        self.assertFalse(re.fullmatch(arithmeticExpr,"(3 ** (2.3 * 1 0.8 / (40 - 20)) +(3 * 4)) * (10/3)" )) 
+        self.assertFalse(re.fullmatch(arithmeticExpr,"(3 ** (2.3 * 10.8 & (40 - 20))+(3 * 4)) * (10/3)" )) 
+         
+                              
           
